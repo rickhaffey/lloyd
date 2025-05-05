@@ -20,11 +20,27 @@ services:
 
   adminer:
     image: adminer
-    ports:
-      - 8080:8080
     restart: always
     depends_on:
       - postgres
+
+  api:
+    image: '${DOCKER_IMAGE_API?Variable not set}:${TAG-latest}'
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    env_file:
+      - .env
+    environment:
+      - DOMAIN=${DOMAIN}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - POSTGRES_SERVER=${POSTGRES_SERVER}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
 
 volumes:
   postgres-data:

@@ -1,0 +1,33 @@
+services:
+
+  postgres:
+    restart: "no"
+    ports:
+      - "5432:5432"
+
+  adminer:
+    restart: "no"
+    ports:
+      - "8080:8080"
+
+  api:
+    restart: "no"
+    ports:
+      - "8000:8000"
+    build:
+      context: ./api
+    command:
+      - fastapi
+      - run
+      - --reload
+      - "app/main.py"
+    develop:
+      watch:
+        - path: ./api/src
+          action: sync
+          target: /app/app
+          ignore:
+            - ./api/.venv
+            - .venv
+        - path: ./api/pyproject.toml
+          action: rebuild
