@@ -18,6 +18,20 @@ services:
       - POSTGRES_USER=${POSTGRES_USER?Variable not set}
       - POSTGRES_DB=${POSTGRES_DB?Variable not set}
 
+  prestart:
+    image: liquibase/liquibase:4.31
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    volumes:
+      - ./liquibase/migrations:/liquibase/migrations
+      - ./liquibase/changelog.xml:/liquibase/changelog.xml
+      - ./liquibase/liquibase.properties:/liquibase/liquibase.properties
+    command:
+      - --defaults-file=/liquibase/liquibase.properties
+      - update
+
   adminer:
     image: adminer
     restart: always
@@ -31,6 +45,8 @@ services:
       postgres:
         condition: service_healthy
         restart: true
+      prestart:
+        condition: service_completed_successfully
     env_file:
       - .env
     environment:
