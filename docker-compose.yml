@@ -58,5 +58,49 @@ services:
       - POSTGRES_USER=${POSTGRES_USER?Variable not set}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
 
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.126.0
+    volumes:
+      - ./observability/otel-collector-config.yml:/etc/otelcol/config.yaml
+
+  prometheus:
+    image: prom/prometheus:v3.3.1
+    volumes:
+      - ./observability/prometheus.yml:/workspace/prometheus.yml
+    command:
+      - --config.file=/workspace/prometheus.yml
+      - --enable-feature=exemplar-storage
+
+  tempo:
+    image: grafana/tempo:2.7.2
+    volumes:
+      - ./observability/tempo.yml:/etc/tempo.yml
+    command: [ "-config.file=/etc/tempo.yml", "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--auth.enabled=false" ]
+
+  loki:
+    image: grafana/loki:3.5.0
+    volumes:
+      - ./observability/loki-config.yml:/etc/loki/local-config.yml
+    command: -config.file=/etc/loki/local-config.yml
+
+  grafana:
+    image: grafana/grafana:12.0.1
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_FEATURE_TOGGLES_ENABLE=accessControlOnCall
+      - GF_INSTALL_PLUGINS=https://storage.googleapis.com/integration-artifacts/grafana-lokiexplore-app/grafana-lokiexplore-app-latest.zip;grafana-lokiexplore-app
+    ports:
+      - 3000:3000/tcp
+    volumes:
+      - ./observability/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./observability/grafana/plugins:/etc/grafana/provisioning/plugins
+      - ./observability/grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./observability/grafana/dashboards:/etc/grafana/dashboards
+
+
+
 volumes:
   postgres-data:

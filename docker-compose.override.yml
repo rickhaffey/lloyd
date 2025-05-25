@@ -31,3 +31,28 @@ services:
             - .venv
         - path: ./api/pyproject.toml
           action: rebuild
+
+  otel-collector:
+    restart: "no"
+    ports:
+      - "8889:8889" # metrics endpoint
+
+  prometheus:
+    restart: "no"
+    ports:
+      - "9090:9090"
+
+  tempo:
+    restart: "no"
+    ports:
+      - "3200:3200"
+
+  loki:
+    restart: "no"
+    ports:
+      - "3100:3100"
+
+  grafana:
+    restart: "no"
+    ports:
+      - 3000:3000/tcp
