@@ -1,10 +1,20 @@
+from opentelemetry import metrics
+from observability import instrument
 from fastapi import FastAPI
 import psycopg
 from pydantic import BaseModel
 from psycopg.rows import class_row
 import os
 
+
 app = FastAPI()
+
+
+meter = metrics.get_meter("lloyd.otel.meter")
+
+work_counter = meter.create_counter(
+    "request.counter", unit="1", description="Counts the number of requests made"
+)
 
 
 class Recipe(BaseModel):
@@ -26,6 +36,7 @@ def get_connection():
 
 @app.get("/recipes")
 def read_recipes():
+    work_counter.add(1, {"work.type": "read_recipe"})
     result = []
     with get_connection() as conn, conn.cursor(row_factory=class_row(Recipe)) as cur:
         cur.execute("SELECT * FROM recipes")
@@ -33,3 +44,6 @@ def read_recipes():
             result.append(record)
 
     return result
+
+
+instrument(app, service_name="lloyd-api")
