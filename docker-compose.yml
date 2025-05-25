@@ -100,7 +100,12 @@ services:
       - ./observability/grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
       - ./observability/grafana/dashboards:/etc/grafana/dashboards
 
-
+  mkdocs:
+    image: squidfunk/mkdocs-material:9.6
+    ports:
+      - "8081:8000"
+    volumes:
+      - .:/docs
 
 volumes:
   postgres-data:
