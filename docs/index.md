@@ -1,6 +1,7 @@
 
 # LLoyd
 
+![Lloyd the Bartender](./images/lloyd-the-bartender.png)
 
 ## Links
 
