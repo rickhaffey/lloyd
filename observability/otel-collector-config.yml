@@ -5,6 +5,23 @@ receivers:
         endpoint: 0.0.0.0:4317
       http:
         endpoint: 0.0.0.0:4318
+  postgresql:
+    endpoint: postgres:5432
+    transport: tcp
+    username: opentelemetry
+    password: opentelemetry
+    databases:
+      - lloyd
+    collection_interval: 10s
+    tls:
+      insecure: true
+      insecure_skip_verify: true
+    query_sample_collection:
+      enabled: true
+    top_query_collection:
+      enabled: true
+      top_n_query: 1234
+
 exporters:
   debug:
     verbosity: detailed
@@ -19,14 +36,19 @@ exporters:
   otlphttp/loki:
     endpoint: http://loki:3100/otlp
 
+extensions:
+  health_check:
+    endpoint: "0.0.0.0:13133"
+
 service:
+  extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
       exporters: [debug,otlphttp/tempo]
     metrics:
-      receivers: [otlp]
+      receivers: [otlp,postgresql]
       exporters: [debug,prometheus]
     logs:
-      receivers: [otlp]
+      receivers: [otlp,postgresql]
       exporters: [debug,otlphttp/loki]

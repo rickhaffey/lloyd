@@ -17,6 +17,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
       - POSTGRES_USER=${POSTGRES_USER?Variable not set}
       - POSTGRES_DB=${POSTGRES_DB?Variable not set}
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=top
 
   prestart:
     image: liquibase/liquibase:4.31
@@ -63,26 +64,57 @@ services:
 
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.126.0
+    image: otel/opentelemetry-collector-contrib:0.126.0
     volumes:
-      - ./observability/otel-collector-config.yml:/etc/otelcol/config.yaml
+      - ./observability/otel-collector-config.yml:/etc/otelcol-contrib/config.yaml
+    depends_on:
+      postgres:
+        condition: service_healthy
+      tempo:
+        condition: service_healthy
+      loki:
+        condition: service_healthy
+      prestart:
+        condition: service_completed_successfully
 
   prometheus:
     image: prom/prometheus:v3.3.1
+    healthcheck:
+      test: wget --quiet --tries=1 --output-document=- http://localhost:9090/-/healthy | grep -q -w Healthy || exit 1
+      start_period: 20s
+      interval: 10s
+      timeout: 1s
+      retries: 12  # try for 2 minutes
     volumes:
       - ./observability/prometheus.yml:/workspace/prometheus.yml
     command:
       - --config.file=/workspace/prometheus.yml
       - --enable-feature=exemplar-storage
+    depends_on:
+      otel-collector:
+        condition: service_started
+
 
   tempo:
     image: grafana/tempo:2.7.2
+    healthcheck:
+      test: wget --quiet --tries=1 --output-document=- http://localhost:3200/ready | grep -q -w ready || exit 1
+      start_period: 20s
+      interval: 10s
+      timeout: 1s
+      retries: 12  # try for 2 minutes
     volumes:
       - ./observability/tempo.yml:/etc/tempo.yml
     command: [ "-config.file=/etc/tempo.yml", "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--auth.enabled=false" ]
 
   loki:
     image: grafana/loki:3.5.0
+    healthcheck:
+      test: wget --quiet --tries=1 --output-document=- http://localhost:3100/ready | grep -q -w ready || exit 1
+      start_period: 20s
+      interval: 10s
+      timeout: 1s
+      retries: 12  # try for 2 minutes
     volumes:
       - ./observability/loki-config.yml:/etc/loki/local-config.yml
     command: -config.file=/etc/loki/local-config.yml
@@ -102,13 +134,20 @@ services:
       - ./observability/grafana/plugins:/etc/grafana/provisioning/plugins
       - ./observability/grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
       - ./observability/grafana/dashboards:/etc/grafana/dashboards
+    depends_on:
+      prometheus:
+        condition: service_healthy
+      tempo:
+        condition: service_healthy
+      loki:
+        condition: service_healthy
 
   mkdocs:
-    image: squidfunk/mkdocs-material:9.6
+    image: '${DOCKER_IMAGE_MKDOCS?Variable not set}:${TAG-latest}'
     ports:
       - "8081:8000"
     volumes:
-      - .:/docs
+      - ./mkdocs:/docs
 
 volumes:
   postgres-data:

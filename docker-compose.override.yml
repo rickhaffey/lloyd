@@ -36,6 +36,7 @@ services:
     restart: "no"
     ports:
       - "8889:8889" # metrics endpoint
+      - "13133:13133" # health check endpoint
 
   prometheus:
     restart: "no"
@@ -56,3 +57,14 @@ services:
     restart: "no"
     ports:
       - 3000:3000/tcp
+
+  mkdocs:
+    build:
+      context: ./mkdocs
+    develop:
+      watch:
+        - path: ./mkdocs
+          action: sync
+          target: /docs
+        - path: ./mkdocs/Dockerfile
+          action: rebuild

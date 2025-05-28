@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset "Rick Haffey":"0001"
+--changeset "Rick Haffey":"0003"
 --comment Create table: recipes
 
 create table if not exists recipes(

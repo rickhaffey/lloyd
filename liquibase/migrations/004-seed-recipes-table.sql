@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset "Rick Haffey":"0002"
+--changeset "Rick Haffey":"0004"
 --comment Seed table: recipes
 
 

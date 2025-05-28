@@ -1,7 +1,7 @@
 
 # LLoyd
 
-![Lloyd the Bartender](./images/lloyd-the-bartender.png)
+![Lloyd the Bartender](images/lloyd-the-bartender.png)
 
 ## Links
 
@@ -36,6 +36,11 @@
 * [Dashboard](http://localhost:3000/d/fastapi-observability/fastapi-observability?orgId=1&from=now-5m&to=now&timezone=browser&var-app_name=&var-log_keyword=&refresh=5s)
 
 
+### OpenTelemetry
+
+* [opentelemetry-collector (Github)](https://github.com/open-telemetry/opentelemetry-collector)
+* [opentelemetry-collector-contrib (Github)](https://github.com/open-telemetry/opentelemetry-collector-contrib)
+
 
 ### Docker
 
@@ -44,6 +49,15 @@
 * [Dockerfile Reference](https://docs.docker.com/reference/dockerfile/)
 * [Docker Compose File Reference](https://docs.docker.com/reference/compose-file/)
 
+
+## TEST
+
+```puml
+@startuml
+Bob -> Alice : hello
+Alice -> Charlie : goodbye
+@enduml
+```
 
 ## MkDocs
 
