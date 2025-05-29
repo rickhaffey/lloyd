@@ -116,5 +116,9 @@ sort_index: int
 - [ ] story mapping
 - [ ] 12 factor app
 - [ ] mkdocs + plantuml
-
+- [ ] JSON-LD
+- [ ] DBML
+  - https://dbml.dbdiagram.io/home
+  - https://github.com/holistics/dbml
+- [ ] https://developers.google.com/search/docs/appearance/structured-data/recipe
 open API spec -> Faker generated dataset
