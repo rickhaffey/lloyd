@@ -14,6 +14,9 @@ startup-api: ## Run just the API and its dependencies (postgres, pre-start, etc.
 startup-otel-collector: ## Run just the API and its dependencies (postgres, pre-start, etc.)
 	docker compose -f docker-compose.yml -f docker-compose.override.yml up --build --watch otel-collector
 
+precommit: ## Run all pre-commit checks and fixes against all files
+	uv run pre-commit run --all-files
+
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
