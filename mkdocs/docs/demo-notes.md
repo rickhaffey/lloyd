@@ -5,6 +5,7 @@
 - add readme.md based on template
 - add changelog.md
 - [ ] update changelog to reflect current project
+  - do this incrementally as part of the walkthrough series
 - [ ] automate changelog to apply updates with commits against main
 - add .gitignore using `gi macos`
 - git init
@@ -20,7 +21,7 @@
 
 - add docker-compose.yaml
 - add .env
-- [ ] put .env in .gitignore and add .env.sample
+- [x] put .env in .gitignore and add .env.sample
 
 ## add api project
 
@@ -45,14 +46,32 @@
     - https://github.com/Blueswen/fastapi-observability
     - https://github.com/grafana/loki/blob/main/production/docker/docker-compose.yaml
     - https://github.com/open-telemetry/opentelemetry-demo
+- [ ] deprecated package for attributing functions with @deprecated
+- [ ] switch all hardcoded values to environment variables
+- [ ] otel collector: no way to have compose level health check (container has no shell)
+
+### Metrics
+
+* **TODO**
+
+### Traces
+
+* **TODO**
+
+### Logs
+
+- **loguru**
+    - [loguru docs](https://loguru.readthedocs.io/en/stable/)
+    - [loguru github](https://github.com/Delgan/loguru)
+
+- **structlog**
+    - [structlog docs](https://www.structlog.org/en/stable/)
+    - [structlog github](https://github.com/hynek/structlog)
+
 - [ ] structured logging: loguru, python-json-logger, structlog
 - [ ] redact sensitive data from signals - e.g. api headers w/ app tokens, etc.
 
 
-- [ ] deprecated package for attributing functions with @deprecated
-- [ ] switch all hardcoded values to environment variables
-
-- [ ] otel collector: no way to have compose level health check (container has no shell)
 
 ## documentation
 
@@ -120,5 +139,5 @@ sort_index: int
 - [ ] DBML
   - https://dbml.dbdiagram.io/home
   - https://github.com/holistics/dbml
-- [ ] https://developers.google.com/search/docs/appearance/structured-data/recipe
+- [x] https://developers.google.com/search/docs/appearance/structured-data/recipe
 open API spec -> Faker generated dataset

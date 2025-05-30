@@ -14,6 +14,9 @@ startup-api: ## Run just the API and its dependencies (postgres, pre-start, etc.
 startup-otel-collector: ## Run just the API and its dependencies (postgres, pre-start, etc.)
 	docker compose -f docker-compose.yml -f docker-compose.override.yml up --build --watch otel-collector
 
+startup-docs: ## Run just the mkDocs dev server
+	docker compose -f docker-compose.yml -f docker-compose.override.yml up --build --watch mkdocs
+
 precommit: ## Run all pre-commit checks and fixes against all files
 	uv run pre-commit run --all-files
 

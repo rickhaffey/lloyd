@@ -5,6 +5,9 @@ import psycopg
 from pydantic import BaseModel
 from psycopg.rows import class_row
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 app = FastAPI()
@@ -38,6 +41,13 @@ def get_connection():
 def read_recipes():
     work_counter.add(1, {"work.type": "read_recipe"})
     result = []
+
+    logger.debug("read_recipes: LOG MESSAGE DEMO - DEBUG")
+    logger.info("read_recipes: LOG MESSAGE DEMO - INFO")
+    logger.warning("read_recipes: LOG MESSAGE DEMO - WARNING")
+    logger.error("read_recipes: LOG MESSAGE DEMO - ERROR")
+    logger.critical("read_recipes: LOG MESSAGE DEMO - CRITICAL")
+
     with get_connection() as conn, conn.cursor(row_factory=class_row(Recipe)) as cur:
         cur.execute("SELECT * FROM recipes")
         for record in cur:
