@@ -1,4 +1,5 @@
 import logging
+from loguru import logger
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 
 # otel trace imports
@@ -26,6 +27,11 @@ from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
 
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.instrumentation.logging import LoggingInstrumentor
+
+
+class PropagateHandler(logging.Handler):
+    def emit(self, record: logging.LogRecord) -> None:
+        logging.getLogger(record.name).handle(record)
 
 
 def instrument(app, service_name):
@@ -61,6 +67,9 @@ def instrument(app, service_name):
     # attach OTLP handler to root logger
     handler = LoggingHandler(logger_provider=logger_provider)
     logging.getLogger().addHandler(handler)
+
+    # configure loguru to propagate structured logs to standard python logging
+    logger.add(PropagateHandler(), serialize=True)
 
     # instrument logging to automatically inject tracing context into log statements
     LoggingInstrumentor().instrument(set_logging_format=False)

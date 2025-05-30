@@ -5,9 +5,7 @@ import psycopg
 from pydantic import BaseModel
 from psycopg.rows import class_row
 import os
-import logging
-
-logger = logging.getLogger(__name__)
+from loguru import logger
 
 
 app = FastAPI()
