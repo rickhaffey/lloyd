@@ -68,7 +68,7 @@
     - [structlog docs](https://www.structlog.org/en/stable/)
     - [structlog github](https://github.com/hynek/structlog)
 
-- [ ] structured logging: loguru, python-json-logger, structlog
+- [x] structured logging: loguru, python-json-logger, structlog
 - [ ] redact sensitive data from signals - e.g. api headers w/ app tokens, etc.
 
 
@@ -79,40 +79,18 @@
 - [x] use mkdocs + material for doc site
 
 
-## preliminary schema
-
-**recipes**
-id: int, auto-increment
-name: string(255), not null, unique
-description: string(?) null
-
-**recipe_instructions**
-id:
-recipe_id: FK
-text: string(255)
-sort_oder: int
-
-**ingredients**
-id
-name
-
-**recipe_ingredients**
-recipe_id: FK
-ingredient_id: FK
-quantity: float
-units:
-sort_index: int
-
-
-
 ## technologies
 
+- [ ] mkdocs [+ material]
+- [ ] mkdocs + plantuml
+- [ ] story mapping
+- [ ] ADRs
+- [ ] 12 factor app
 - [ ] prometheus
 - [ ] loki
 - [ ] tempo
 - [ ] grafana
 - [ ] svg
-- [ ] mkdocs [+ material]
 - [ ] gRPC
 - [ ] protobuf
 - [ ] email catcher
@@ -132,9 +110,6 @@ sort_index: int
 - [ ] psycopg + otel
 - [ ] jinja + otel?
 - [ ] use a board (pivotal?); kanban vs. scrum
-- [ ] story mapping
-- [ ] 12 factor app
-- [ ] mkdocs + plantuml
 - [ ] JSON-LD
 - [ ] DBML
   - https://dbml.dbdiagram.io/home
