@@ -1,0 +1,127 @@
+Project lloyd_api {
+    database_type: 'PostgreSQL'
+    Note: 'API to expose data related to drinks, ingredients, and recipes'
+}
+
+Table recipes {
+    id integer [pk, increment]
+    name varchar [not null, unique]
+    description varchar
+    author_id integer [ref: - authors.id]
+    source_id integer [ref: - sources.id]
+    prep_time interval
+}
+
+Table ingredients {
+    id integer [pk, increment]
+    name varchar [not null, unique]
+    description varchar
+}
+
+Table recipe_ingredients {
+    recipe_id integer [not null, ref: > recipes.id]
+    ingredient_id integer [not null, ref: > ingredients.id]
+    quantity integer [not null, default: 1]
+    unit_of_measure integer [ref: > units_of_measure.id]
+    sort_index integer
+
+    indexes {
+        (recipe_id, ingredient_id) [pk]
+    }
+}
+
+
+Table units_of_measure {
+    id integer [pk, increment]
+    name varchar [not null, unique]
+    description varchar
+}
+
+Table recipe_instructions {
+    id integer [pk, increment]
+    recipe_id integer [not null, ref: > recipes.id]
+    name varchar
+    text varchar [not null]
+    image_id integer [ref: - images.id]
+    sort_index integer
+}
+
+Table recipe_images {
+    recipe_id integer [not null, ref: > recipes.id]
+    image_id integer [not null, ref: - images.id]
+    sort_index integer
+
+    indexes {
+        (recipe_id, image_id) [pk]
+    }
+}
+
+Table ingredient_images {
+    ingredient_id integer [not null, ref: > ingredients.id]
+    image_id integer [not null, ref: - images.id]
+    sort_index integer
+
+    indexes {
+        (ingredient_id, image_id) [pk]
+    }
+}
+
+
+Table recipe_instruction_images {
+    recipe_instruction_id integer [not null, ref: - recipe_instructions.id]
+    image_id integer [not null, ref: - images.id]
+    sort_index integer
+
+    indexes {
+        (recipe_instruction_id, image_id) [pk]
+    }
+}
+
+Table images {
+    id integer [pk, increment]
+    url varchar [not null]
+    caption varchar
+    height integer
+    width integer
+}
+
+Table reviews {
+    id integer [pk, increment]
+    value integer [not null]
+    text varchar
+    author_id integer [ref: - authors.id, not null]
+}
+
+Table recipe_reviews {
+    recipe_id integer [not null, ref: > recipes.id]
+    review_id integer [not null, ref: > reviews.id]
+
+    indexes {
+        (recipe_id, review_id) [pk]
+    }
+}
+
+
+
+Table ingredient_reviews {
+    ingredient_id integer [not null, ref: > ingredients.id]
+    review_id integer [not null, ref: > reviews.id]
+
+    indexes {
+        (ingredient_id, review_id) [pk]
+    }
+}
+
+Table authors {
+    id integer [pk, increment]
+    email varchar [not null, unique]
+    name varchar [not null]
+}
+
+Table sources {
+    id integer [pk, increment]
+    name varchar [not null, unique]
+    description varchar
+
+    Note: 'Sources of recipes, such as books, web urls, ingredient vendors, etc.'
+}

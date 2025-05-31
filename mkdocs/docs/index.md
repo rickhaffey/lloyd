@@ -1,6 +1,8 @@
 
 # LLoyd
 
+The Bartender
+
 ![Lloyd the Bartender](images/lloyd-the-bartender.png)
 
 ## Links
@@ -48,16 +50,6 @@
 * [Docker Compose Reference](https://docs.docker.com/compose/)
 * [Dockerfile Reference](https://docs.docker.com/reference/dockerfile/)
 * [Docker Compose File Reference](https://docs.docker.com/reference/compose-file/)
-
-
-## TEST
-
-```puml
-@startuml
-Bob -> Alice : hello
-Alice -> Charlie : goodbye
-@enduml
-```
 
 ## MkDocs
 

@@ -1,12 +1,30 @@
 # Demo Notes
 
+## TODOs
+
+- [ ] Figure out changelog handling
+  - DEFERRED: do this incrementally as part of the walkthrough series
+  - [ ] update changelog to reflect current project
+  - [ ] automate changelog to apply updates with commits against main
+- [ ] switch all hardcoded values to environment variables
+- [ ] observability
+  - [ ] adjust grafana dashboard to have useful display
+  - [ ] setup observability w/ otel & grafana
+    - api
+    - postgres
+    - https://github.com/Blueswen/fastapi-observability
+    - https://github.com/grafana/loki/blob/main/production/docker/docker-compose.yaml
+    - https://github.com/open-telemetry/opentelemetry-demo
+  - [ ] otel collector: no way to have compose level health check (container has no shell)
+  - [ ] redact sensitive data from signals - e.g. api headers w/ app tokens, etc.
+- [ ] investigate: deprecated package for attributing functions with @deprecated
+- [ ] documentation
+  - [ ] treat log entries as means of internal documentation
+
 ## initial repo setup
 
 - add readme.md based on template
 - add changelog.md
-- [ ] update changelog to reflect current project
-  - do this incrementally as part of the walkthrough series
-- [ ] automate changelog to apply updates with commits against main
 - add .gitignore using `gi macos`
 - git init
 - uv venv
@@ -31,7 +49,6 @@
 - add prestart to run migrations
 - add migration files / liquibase support files
 
-
 ## postgres + pydantic
 
 - add ruff as dev dependency
@@ -39,16 +56,6 @@
 - add data seed migration script
 
 ## observability
-
-- [ ] setup observability w/ otel & grafana
-    - api
-    - postgres
-    - https://github.com/Blueswen/fastapi-observability
-    - https://github.com/grafana/loki/blob/main/production/docker/docker-compose.yaml
-    - https://github.com/open-telemetry/opentelemetry-demo
-- [ ] deprecated package for attributing functions with @deprecated
-- [ ] switch all hardcoded values to environment variables
-- [ ] otel collector: no way to have compose level health check (container has no shell)
 
 ### Metrics
 
@@ -69,15 +76,10 @@
     - [structlog github](https://github.com/hynek/structlog)
 
 - [x] structured logging: loguru, python-json-logger, structlog
-- [ ] redact sensitive data from signals - e.g. api headers w/ app tokens, etc.
-
-
 
 ## documentation
 
-- [ ] treat log entries as means of internal documentation
 - [x] use mkdocs + material for doc site
-
 
 ## technologies
 
