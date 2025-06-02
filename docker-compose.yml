@@ -149,5 +149,16 @@ services:
     volumes:
       - ./mkdocs:/docs
 
+  locust:
+    image: locustio/locust:2.37.6
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./observability/locustfile.py:/mnt/locust/locustfile.py
+    depends_on:
+      api:
+        condition: service_started
+    command: -f /mnt/locust/locustfile.py --users 10 --spawn-rate 1 -H http://api:8000
+
 volumes:
   postgres-data:
