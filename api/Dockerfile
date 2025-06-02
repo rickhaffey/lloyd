@@ -33,7 +33,7 @@ COPY ./scripts /app/scripts
 
 COPY ./pyproject.toml ./uv.lock /app/
 
-COPY ./src /app/app
+COPY ./src/api /app/app
 
 # Sync the project
 # Ref: https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers

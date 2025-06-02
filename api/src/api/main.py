@@ -1,5 +1,5 @@
 from opentelemetry import metrics
-from .observability import instrument
+from .utils.observability import instrument
 from fastapi import FastAPI
 import psycopg
 from pydantic import BaseModel
@@ -9,7 +9,7 @@ from loguru import logger
 import time
 import random
 
-from .api.routers import observability_demo
+from .routers import observability_demo
 
 app = FastAPI()
 
