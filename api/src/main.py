@@ -1,15 +1,19 @@
 from opentelemetry import metrics
-from observability import instrument
+from .observability import instrument
 from fastapi import FastAPI
 import psycopg
 from pydantic import BaseModel
 from psycopg.rows import class_row
 import os
 from loguru import logger
+import time
+import random
 
+from .api.routers import observability_demo
 
 app = FastAPI()
 
+app.include_router(observability_demo.router)
 
 meter = metrics.get_meter("lloyd.otel.meter")
 
@@ -37,6 +41,7 @@ def get_connection():
 
 @app.get("/recipes")
 def read_recipes():
+    time.sleep(random.randint(5, 10))
     work_counter.add(1, {"work.type": "read_recipe"})
     result = []
 
