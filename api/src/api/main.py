@@ -10,8 +10,11 @@ import time
 import random
 
 from .routers import observability_demo
+from .utils.observability_middleware import MetricsMiddleware
 
 app = FastAPI()
+
+app.add_middleware(MetricsMiddleware, app_name="app-a")
 
 app.include_router(observability_demo.router)
 
