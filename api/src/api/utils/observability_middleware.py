@@ -16,74 +16,77 @@ from opentelemetry.sdk.metrics import MeterProvider
 from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 
-service_name = "app-a"
-resource = Resource.create(
-    attributes={
-        SERVICE_NAME: service_name,
-        "service.name": service_name,
-        "app_name": service_name,
-    }
-)
-
-# Metrics Setup
-metric_reader = PeriodicExportingMetricReader(OTLPMetricExporter(insecure=True))
-meter_provider = MeterProvider(resource=resource, metric_readers=[metric_reader])
-metrics.set_meter_provider(meter_provider)
-
-
-# Creates a meter from the global meter provider
-meter = metrics.get_meter("lloyd.otel.meter")
-
-INFO = meter.create_gauge(
-    name="fastapi_app_info", description="FastAPI application information."
-)
-
-REQUESTS = meter.create_counter(
-    name="fastapi_requests_total",
-    description="Total count of requests by method and path.",
-)
-
-RESPONSES = meter.create_counter(
-    name="fastapi_responses_total",
-    description="Total count of responses by method, path and status codes.",
-)
-
-REQUESTS_PROCESSING_TIME = meter.create_histogram(
-    name="fastapi_requests_duration_seconds",
-    description="Histogram of requests processing time by path (in seconds)",
-    explicit_bucket_boundaries_advisory=[
-        0.005,
-        0.01,
-        0.025,
-        0.05,
-        0.075,
-        0.1,
-        0.25,
-        0.5,
-        0.75,
-        1,
-        2.5,
-        5,
-        7.5,
-        10,
-    ],
-)
-
-EXCEPTIONS = meter.create_counter(
-    name="fastapi_exceptions_total",
-    description="Total count of exceptions raised by path and exception type",
-)
-REQUESTS_IN_PROGRESS = meter.create_up_down_counter(
-    name="fastapi_requests_in_progress",
-    description="Gauge of requests by method and path currently being processed",
-)
-
 
 class MetricsMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp, app_name: str = "fastapi-app") -> None:
         super().__init__(app)
         self.app_name = app_name
-        INFO.set(1, attributes={"app_name": self.app_name})
+
+        service_name = "app-a"
+        resource = Resource.create(
+            attributes={
+                SERVICE_NAME: service_name,
+                "service.name": service_name,
+                "app_name": service_name,
+            }
+        )
+
+        # Metrics Setup
+        metric_reader = PeriodicExportingMetricReader(OTLPMetricExporter(insecure=True))
+        meter_provider = MeterProvider(
+            resource=resource, metric_readers=[metric_reader]
+        )
+        metrics.set_meter_provider(meter_provider)
+
+        # Creates a meter from the global meter provider
+        meter = metrics.get_meter("lloyd.otel.meter")
+
+        self.INFO = meter.create_gauge(
+            name="fastapi_app_info", description="FastAPI application information."
+        )
+
+        self.REQUESTS = meter.create_counter(
+            name="fastapi_requests_total",
+            description="Total count of requests by method and path.",
+        )
+
+        self.RESPONSES = meter.create_counter(
+            name="fastapi_responses_total",
+            description="Total count of responses by method, path and status codes.",
+        )
+
+        self.REQUESTS_PROCESSING_TIME = meter.create_histogram(
+            name="fastapi_requests_duration_seconds",
+            description="Histogram of requests processing time by path (in seconds)",
+            explicit_bucket_boundaries_advisory=[
+                0.005,
+                0.01,
+                0.025,
+                0.05,
+                0.075,
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                1,
+                2.5,
+                5,
+                7.5,
+                10,
+            ],
+        )
+
+        self.EXCEPTIONS = meter.create_counter(
+            name="fastapi_exceptions_total",
+            description="Total count of exceptions raised by path and exception type",
+        )
+
+        self.REQUESTS_IN_PROGRESS = meter.create_up_down_counter(
+            name="fastapi_requests_in_progress",
+            description="Gauge of requests by method and path currently being processed",
+        )
+
+        self.INFO.set(1, attributes={"app_name": self.app_name})
 
     async def dispatch(
         self, request: Request, call_next: RequestResponseEndpoint
@@ -94,17 +97,18 @@ class MetricsMiddleware(BaseHTTPMiddleware):
         if not is_handled_path:
             return await call_next(request)
 
-        # attributes that are common across all intruments
+        # attributes that are common across all instruments
         metric_attributes = {"method": method, "path": path, "app_name": self.app_name}
 
-        REQUESTS_IN_PROGRESS.add(1, attributes=metric_attributes)
-        REQUESTS.add(1, attributes=metric_attributes)
+        self.INFO.set(1, attributes={"app_name": self.app_name})
+        self.REQUESTS_IN_PROGRESS.add(1, attributes=metric_attributes)
+        self.REQUESTS.add(1, attributes=metric_attributes)
         before_time = time.perf_counter()
         try:
             response = await call_next(request)
         except BaseException as e:
             status_code = HTTP_500_INTERNAL_SERVER_ERROR
-            EXCEPTIONS.add(
+            self.EXCEPTIONS.add(
                 1, attributes=dict(metric_attributes, exception_type=type(e).__name__)
             )
             raise e from None
@@ -117,16 +121,16 @@ class MetricsMiddleware(BaseHTTPMiddleware):
             # span = trace.get_current_span()
             # trace_id = trace.format_trace_id(span.get_span_context().trace_id)
 
-            REQUESTS_PROCESSING_TIME.record(
+            self.REQUESTS_PROCESSING_TIME.record(
                 after_time - before_time,
                 # attributes=dict(metric_attributes, TraceID=trace_id),
                 attributes=metric_attributes,
             )
         finally:
-            RESPONSES.add(
+            self.RESPONSES.add(
                 1, attributes=dict(metric_attributes, status_code=status_code)
             )
-            REQUESTS_IN_PROGRESS.add(-1, attributes=metric_attributes)
+            self.REQUESTS_IN_PROGRESS.add(-1, attributes=metric_attributes)
 
         return response
 
@@ -138,27 +142,3 @@ class MetricsMiddleware(BaseHTTPMiddleware):
                 return route.path, True
 
         return request.url.path, False
-
-
-# def metrics(request: Request) -> Response:
-#     return Response(generate_latest(REGISTRY), headers={"Content-Type": CONTENT_TYPE_LATEST})
-#
-#
-# def setting_otlp(app: ASGIApp, app_name: str, endpoint: str, log_correlation: bool = True) -> None:
-#     # Setting OpenTelemetry
-#     # set the service name to show in traces
-#     resource = Resource.create(attributes={
-#         "service.name": app_name
-#     })
-#
-#     # set the tracer provider
-#     tracer = TracerProvider(resource=resource)
-#     trace.set_tracer_provider(tracer)
-#
-#     tracer.add_span_processor(BatchSpanProcessor(
-#         OTLPSpanExporter(endpoint=endpoint, insecure=True)))
-#
-#     if log_correlation:
-#         LoggingInstrumentor().instrument(set_logging_format=True)
-#
-#     FastAPIInstrumentor.instrument_app(app, tracer_provider=tracer)
