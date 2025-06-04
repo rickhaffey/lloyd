@@ -1,7 +1,6 @@
 import time
 from typing import Tuple
 
-from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource, SERVICE_NAME
 
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
@@ -52,7 +51,24 @@ RESPONSES = meter.create_counter(
 REQUESTS_PROCESSING_TIME = meter.create_histogram(
     name="fastapi_requests_duration_seconds",
     description="Histogram of requests processing time by path (in seconds)",
+    explicit_bucket_boundaries_advisory=[
+        0.005,
+        0.01,
+        0.025,
+        0.05,
+        0.075,
+        0.1,
+        0.25,
+        0.5,
+        0.75,
+        1,
+        2.5,
+        5,
+        7.5,
+        10,
+    ],
 )
+
 EXCEPTIONS = meter.create_counter(
     name="fastapi_exceptions_total",
     description="Total count of exceptions raised by path and exception type",
@@ -95,13 +111,16 @@ class MetricsMiddleware(BaseHTTPMiddleware):
         else:
             status_code = response.status_code
             after_time = time.perf_counter()
+
+            # TODO: investigate how to handle this with otel sdk
             # retrieve trace id for exemplar
-            span = trace.get_current_span()
-            trace_id = trace.format_trace_id(span.get_span_context().trace_id)
+            # span = trace.get_current_span()
+            # trace_id = trace.format_trace_id(span.get_span_context().trace_id)
 
             REQUESTS_PROCESSING_TIME.record(
                 after_time - before_time,
-                attributes=dict(metric_attributes, TraceID=trace_id),
+                # attributes=dict(metric_attributes, TraceID=trace_id),
+                attributes=metric_attributes,
             )
         finally:
             RESPONSES.add(
