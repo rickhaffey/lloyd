@@ -18,8 +18,8 @@ updates:
   # Docker
   - package-ecosystem: docker
     directories:
-      - /backend
-      - /frontend
+      - /api
+      - /mkdocs
     schedule:
       interval: weekly
     commit-message:
