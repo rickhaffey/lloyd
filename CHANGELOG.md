@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+
+* revert test code. PR [#15](https://github.com/rickhaffey/lloyd/pull/15) by [@rickhaffey](https://github.com/rickhaffey).
+
 ## [0.0.1] - 2025-06-21
 
 ### Features
