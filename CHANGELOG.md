@@ -14,8 +14,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * initial repo and infrastructure setup. (No PR)
 * add changelog automation. PR [#8](https://github.com/rickhaffey/lloyd/pull/8) by [@rickhaffey](https://github.com/rickhaffey).
 
-
-* testing bypass settings
-
 [unreleased]: https://github.com/rickhaffey/lloyd/compare/v0.0.1...HEAD
 [0.0.1]: https://github.com/rickhaffey/lloyd/compare/v.0.0.0...v0.0.1
