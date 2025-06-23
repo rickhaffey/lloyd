@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump python from 3.12 to 3.13 in /api. PR [#13](https://github.com/rickhaffey/lloyd/pull/13) by [@dependabot[bot]](https://github.com/apps/dependabot).
+
 ### Refactors
 
 * ♻️ Refactor out initial data access and router components. PR [#17](https://github.com/rickhaffey/lloyd/pull/17) by [@rickhaffey](https://github.com/rickhaffey).
