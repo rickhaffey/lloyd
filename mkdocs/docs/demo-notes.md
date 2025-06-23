@@ -2,14 +2,14 @@
 
 ## TODOs
 
-- [ ] Figure out changelog handling
-  - DEFERRED: do this incrementally as part of the walkthrough series
-  - [ ] update changelog to reflect current project
-  - [ ] automate changelog to apply updates with commits against main
+- [x] Figure out changelog handling
+  - ~~DEFERRED: do this incrementally as part of the walkthrough series~~
+  - [x] update changelog to reflect current project
+  - [x] automate changelog to apply updates with commits against main
 - [ ] switch all hardcoded values to environment variables
 - [ ] observability
   - [ ] adjust grafana dashboard to have useful display
-  - [ ] setup observability w/ otel & grafana
+  - [x] setup observability w/ otel & grafana
     - api
     - postgres
     - https://github.com/Blueswen/fastapi-observability

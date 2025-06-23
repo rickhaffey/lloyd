@@ -111,3 +111,66 @@ for later that describes what the product will offer users in the future.
    * plan development and testing
    * build and verify the first release
 6. **Iterate**
+
+## Lloyd Application
+
+### 1. Frame
+
+* **What**: Lloyd is an application used to automate many of the tasks related to
+running a bar.  This includes customer facing functionality such as
+ordering drinks, and back-end functionality such as managing inventory.
+* **Who**: The primary users of Lloyd are:
+  * Patrons: people who order drinks
+  * Bartenders: people who prepare and serve drinks
+  * Bar Managers: people who manage the bar's operations
+  * Bar Owners: people who own the bar and care about its profitability
+  * DevOps: people who maintain the Lloyd application
+* **Why**: Lloyd provides a way for bars to automate many of the tasks related
+to running a bar, which can help reduce costs, improve efficiency, and enhance the
+customer experience.  It also provides a way for bar owners to track inventory
+and sales, which can help them make better business decisions.
+
+### 2. Map the Big Picture
+
+#### Patron
+
+* Find drink (P1)
+* View drink details (P1)
+* Order drink (P2)
+* Consume drink
+* Close out (P3)
+* Review [drink] (P2)
+
+#### Bartender
+
+* View drink recipe (P1)
+* Prepare drink
+* Serve drink (P3)
+
+#### Bar Manager
+
+* Add / edit / delete drink (P1)
+* Add / edit / delete drink recipe (P1)
+* Manage inventory (P3)
+
+#### DevOps
+
+* Manage system (P3)
+* View system health (P3)
+* Diagnose issues (P3)
+* Implement enhancements (P3)
+
+#### Bar Owner
+
+* View trends (P4)
+* Adjust / optimize prices (P4)
+* Manage / optimize inventory (P4)
+* Manage Promotions (P4)
+
+### 3. Explore
+
+### 4. Slice out Viable Releases
+
+### 5. Slice out a Development Strategy
+
+### 6. Iterate
