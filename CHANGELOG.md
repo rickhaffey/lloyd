@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump otel/opentelemetry-collector-contrib from 0.126.0 to 0.128.0. PR [#2](https://github.com/rickhaffey/lloyd/pull/2) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump locustio/locust from 2.37.6 to 2.37.10. PR [#1](https://github.com/rickhaffey/lloyd/pull/1) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump python from 3.12 to 3.13 in /api. PR [#13](https://github.com/rickhaffey/lloyd/pull/13) by [@dependabot[bot]](https://github.com/apps/dependabot).
 
