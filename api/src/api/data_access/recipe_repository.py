@@ -8,7 +8,7 @@ class RecipeRepository:
     def __init__(self):
         pass
 
-    def _get_connection(self):
+    def _get_connection(self) -> psycopg.Connection:
         host = os.environ["POSTGRES_SERVER"]
         port = os.environ["POSTGRES_PORT"]
         dbname = os.environ["POSTGRES_DB"]
