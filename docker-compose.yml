@@ -120,7 +120,7 @@ services:
     command: -config.file=/etc/loki/local-config.yml
 
   grafana:
-    image: grafana/grafana:12.0.1
+    image: grafana/grafana:12.0.2
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
