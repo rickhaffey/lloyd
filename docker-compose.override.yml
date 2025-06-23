@@ -20,17 +20,14 @@ services:
       - fastapi
       - run
       - --reload
-      - "app/main.py"
+      - "src/api/main.py"
     environment:
       - OTEL_METRIC_EXPORT_INTERVAL=5000
     develop:
       watch:
         - path: ./api/src
           action: sync
-          target: /app/app
-          ignore:
-            - ./api/.venv
-            - .venv
+          target: /lloyd-api/src
         - path: ./api/pyproject.toml
           action: rebuild
 
