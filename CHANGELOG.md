@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump opentelemetry-exporter-richconsole from 0.54b1 to 0.55b1 in /api. PR [#9](https://github.com/rickhaffey/lloyd/pull/9) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump liquibase/liquibase from 4.31 to 4.32. PR [#21](https://github.com/rickhaffey/lloyd/pull/21) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump pydantic from 2.11.4 to 2.11.7 in /api. PR [#6](https://github.com/rickhaffey/lloyd/pull/6) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump grafana/grafana from 12.0.1 to 12.0.2. PR [#3](https://github.com/rickhaffey/lloyd/pull/3) by [@dependabot[bot]](https://github.com/apps/dependabot).
