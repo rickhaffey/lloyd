@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump grafana/loki from 3.5.0 to 3.5.1. PR [#5](https://github.com/rickhaffey/lloyd/pull/5) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump locustio/locust from 2.37.10 to 2.37.11. PR [#23](https://github.com/rickhaffey/lloyd/pull/23) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump grafana/tempo from 2.7.2 to 2.8.1. PR [#4](https://github.com/rickhaffey/lloyd/pull/4) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump opentelemetry-exporter-richconsole from 0.54b1 to 0.55b1 in /api. PR [#9](https://github.com/rickhaffey/lloyd/pull/9) by [@dependabot[bot]](https://github.com/apps/dependabot).
