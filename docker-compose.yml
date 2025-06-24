@@ -96,7 +96,7 @@ services:
 
 
   tempo:
-    image: grafana/tempo:2.7.2
+    image: grafana/tempo:2.8.1
     healthcheck:
       test: wget --quiet --tries=1 --output-document=- http://localhost:3200/ready | grep -q -w ready || exit 1
       start_period: 20s
