@@ -108,7 +108,7 @@ services:
     command: [ "-config.file=/etc/tempo.yml", "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--auth.enabled=false" ]
 
   loki:
-    image: grafana/loki:3.5.0
+    image: grafana/loki:3.5.1
     healthcheck:
       test: wget --quiet --tries=1 --output-document=- http://localhost:3100/ready | grep -q -w ready || exit 1
       start_period: 20s
