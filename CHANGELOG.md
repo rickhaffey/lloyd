@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump liquibase/liquibase from 4.31 to 4.32. PR [#21](https://github.com/rickhaffey/lloyd/pull/21) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump pydantic from 2.11.4 to 2.11.7 in /api. PR [#6](https://github.com/rickhaffey/lloyd/pull/6) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump grafana/grafana from 12.0.1 to 12.0.2. PR [#3](https://github.com/rickhaffey/lloyd/pull/3) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump otel/opentelemetry-collector-contrib from 0.126.0 to 0.128.0. PR [#2](https://github.com/rickhaffey/lloyd/pull/2) by [@dependabot[bot]](https://github.com/apps/dependabot).
