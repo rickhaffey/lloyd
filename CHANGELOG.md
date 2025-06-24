@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump opentelemetry-sdk from 1.33.1 to 1.34.1 in /api. PR [#11](https://github.com/rickhaffey/lloyd/pull/11) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump opentelemetry-exporter-otlp from 1.33.1 to 1.34.1 in /api. PR [#10](https://github.com/rickhaffey/lloyd/pull/10) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump grafana/loki from 3.5.0 to 3.5.1. PR [#5](https://github.com/rickhaffey/lloyd/pull/5) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump locustio/locust from 2.37.10 to 2.37.11. PR [#23](https://github.com/rickhaffey/lloyd/pull/23) by [@dependabot[bot]](https://github.com/apps/dependabot).
