@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+* ⬆ Bump prom/prometheus from v3.4.1 to v3.4.2. PR [#26](https://github.com/rickhaffey/lloyd/pull/26) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump prom/prometheus from v3.3.1 to v3.4.1. PR [#22](https://github.com/rickhaffey/lloyd/pull/22) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump opentelemetry-instrumentation-fastapi from 0.54b1 to 0.55b1 in /api. PR [#12](https://github.com/rickhaffey/lloyd/pull/12) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * ⬆ Bump opentelemetry-sdk from 1.33.1 to 1.34.1 in /api. PR [#11](https://github.com/rickhaffey/lloyd/pull/11) by [@dependabot[bot]](https://github.com/apps/dependabot).
