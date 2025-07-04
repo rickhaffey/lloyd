@@ -78,7 +78,7 @@ services:
         condition: service_completed_successfully
 
   prometheus:
-    image: prom/prometheus:v3.4.1
+    image: prom/prometheus:v3.4.2
     healthcheck:
       test: wget --quiet --tries=1 --output-document=- http://localhost:9090/-/healthy | grep -q -w Healthy || exit 1
       start_period: 20s
