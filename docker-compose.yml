@@ -150,7 +150,7 @@ services:
       - ./mkdocs:/docs
 
   locust:
-    image: locustio/locust:2.37.11
+    image: locustio/locust:2.39.1
     ports:
       - "8089:8089"
     volumes:
